@@ -63,8 +63,6 @@ class Prices extends Module
         Configuration::updateValue('MAX_PRICE', 0);
         Configuration::updateValue('MIN_PRICE', 0);
 
-        include(dirname(__FILE__).'/sql/install.php');
-
         return parent::install() &&
             $this->registerHook('header') &&
             $this->registerHook('backOfficeHeader') &&
@@ -75,8 +73,6 @@ class Prices extends Module
     {
         Configuration::deleteByName('MAX_PRICE');
         Configuration::deleteByName('MIN_PRICE');
-
-        include(dirname(__FILE__).'/sql/uninstall.php');
 
         return parent::uninstall();
     }
