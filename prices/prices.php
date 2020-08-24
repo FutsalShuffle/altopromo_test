@@ -48,7 +48,7 @@ class Prices extends Module
         parent::__construct();
 
         $this->displayName = $this->l('prices');
-        $this->description = $this->l('asdasdasdasdasdasdas');
+        $this->description = $this->l('Вывод кол-ва товаров по мин. и макс. цене');
 
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
         //$this->templateFile = 'module:views/main.tpl';
@@ -91,9 +91,7 @@ class Prices extends Module
 
         $this->context->smarty->assign('module_dir', $this->_path);
 
-        $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
-
-        return $output.$this->renderForm();
+        return $this->renderForm();
     }
 
     /**
@@ -188,15 +186,7 @@ class Prices extends Module
     {
         // Получаем все товары
         $id_lang=(int)Context::getContext()->language->id;
-        $start=0;
-        $limit=10000;
-        $order_by='id_product';
-        $order_way='DESC';
-        $id_category = false; 
-        $only_active =true;
-        $context = null;
-        $all_products = Product::getProducts($id_lang, $start, $limit, $order_by, $order_way, $id_category,
-                $only_active ,  $context );
+        $all_products = Product::getProducts($id_lang, 0, 100000000, 'id_product', 'DESC' );
         // получаем мин и макс цену из конфига
         $counter = 0;
         $minPrice = Configuration::get('MIN_PRICE');
