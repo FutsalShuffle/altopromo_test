@@ -186,7 +186,7 @@ class Prices extends Module
     {
         // Получаем все товары
         $id_lang=(int)Context::getContext()->language->id;
-        $all_products = Product::getProducts($id_lang, 0, 100000000, 'id_product', 'DESC' );
+        $all_products = Product::getProducts($id_lang, 0, 0, 'id_product', 'DESC' );
         // получаем мин и макс цену из конфига
         $counter = 0;
         $minPrice = Configuration::get('MIN_PRICE');
