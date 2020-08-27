@@ -184,19 +184,13 @@ class Prices extends Module
    
     public function hookDisplayFooter()
     {
-        // Получаем все товары
-        $id_lang=(int)Context::getContext()->language->id;
-        $all_products = Product::getProducts($id_lang, 0, 0, 'id_product', 'DESC' );
-        // получаем мин и макс цену из конфига
-        $counter = 0;
         $minPrice = Configuration::get('MIN_PRICE');
         $maxPrice = Configuration::get('MAX_PRICE');
-        // фильтруем по цене
-        foreach ($all_products as $product) {
-            if ($product['price'] >= $minPrice && $product['price'] <= $maxPrice) {
-                $counter++;
-            }
-        }
-        return "{$counter} товаров в диапазоне от {$minPrice} до {$maxPrice}";
+        $db = new DbQuery();
+        $db->select('*');
+        $db->from('product', 'item');
+        $db->where("item.price <= {$maxPrice} AND item.price >= {$minPrice}");
+        $counter = count(Db::getInstance()->executeS($db));
+        return "{$counter} товаров на сайте от {$minPrice}р. до {$maxPrice}р.";
     }
 }
